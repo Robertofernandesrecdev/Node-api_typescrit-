@@ -4,11 +4,12 @@
 
 import {  Response, Request, NextFunction, Router } from 'express';
 import {StatusCodes} from 'http-status-codes'; //para padronizar o status
+import usersRepository from '../repositories/users.repository';
 
 const usersRouter = Router();
 
-usersRouter.get('/users', (req: Request, res: Response, next: NextFunction) => {
-       const users = [{userName: 'Roberto'}];
+usersRouter.get('/users', async (req: Request, res: Response, next: NextFunction) => {
+       const users =  await usersRepository.findAllUsers();
        res.status(StatusCodes.OK).send(users); 
 });
 
