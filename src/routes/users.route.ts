@@ -9,31 +9,29 @@ import usersRepository from '../repositories/users.repository';
 const usersRouter = Router();
 
 usersRouter.get('/users', async (req: Request, res: Response, next: NextFunction) => {
-       const users =  await usersRepository.findAllUsers();
+       const users =  await usersRepository.findAllUsers(); // consulta do banco 
        res.status(StatusCodes.OK).send(users); 
 });
-
-
 
 //exportar a configuração da rota userRouter.get e importar no servidor em index.ts. 
 
 // get/users/:uuid  // req:Resquest<{ uuid: string }> especificando requisição do tipo string!
                                  
-usersRouter.get('/users/:uuid', (req: Request<{ uuid: string }>, res: Response, next: NextFunction) => {
+usersRouter.get('/users/:uuid', async (req: Request<{ uuid: string }>, res: Response, next: NextFunction) => {
     const uuid = req.params.uuid;
-    
-    res.status(StatusCodes.OK).send({uuid});
+    const user = await usersRepository.findById(uuid); // consulta por uuid do banco
+    res.status(StatusCodes.OK).send(user);
 });
 
 
 // post/users // para testar usar o insomnia ou postman! 
 
-usersRouter.post('/users', (req: Request, res: Response, next: NextFunction) => {
+usersRouter.post('/users', async (req: Request, res: Response, next: NextFunction) => {
     const newUser = req.body;
+    
+    const uuid = await usersRepository.create(newUser); // isert do banco 
 
-    console.log(req.body);
-
-    res.status(StatusCodes.CREATED).send(newUser);
+    res.status(StatusCodes.CREATED).send(uuid);
 });
 
 //put/users/:uuid
