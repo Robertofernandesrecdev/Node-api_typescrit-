@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 import express, {Request, Response, NextFunction} from 'express';  // express é uma biblioteca agerenciadora de rotas http.
 import usersRouter from './routes/users.route';  // após importar, chamar a configuração!
 import statusRoute from './status.route';
@@ -16,7 +18,7 @@ app.use(statusRoute);
 
 
 // Inicialização do servidor
-app.listen(3000, () => {
+app.listen( process.env. PORT ||3000, () => {
     console.log('Aplicação escutando a porta 3000!');
 });
 

@@ -34,7 +34,7 @@ class UserRepository{
 
     }
 
-    // fazendo isert / post
+    // fazendo isert / post no banco
 
     async create(user: User): Promise<string> {
         const script = `
