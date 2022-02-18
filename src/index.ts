@@ -1,6 +1,7 @@
 require('dotenv').config()
 
 import express, {Request, Response, NextFunction} from 'express';  // express é uma biblioteca agerenciadora de rotas http.
+import errorHandler from './middlewares/error-handler.middleware';
 import usersRouter from './routes/users.route';  // após importar, chamar a configuração!
 import statusRoute from './status.route';
 
@@ -16,8 +17,11 @@ app.use(express.urlencoded({ extended: true })); // enterder que é string e out
 app.use(usersRouter);  // chamando a configuração! 
 app.use(statusRoute);
 
+// configuração dos handlers de erro
+app.use(errorHandler);
 
-// Inicialização do servidor
+
+// Inicialização do servidor // o process.env.PORT || vai deixar o heroku dizer a porta que vai conectar! 
 app.listen( process.env. PORT ||3000, () => {
     console.log('Aplicação escutando a porta 3000!');
 });
